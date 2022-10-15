@@ -39,17 +39,7 @@ const query = graphql`
         endCursor
       }
       nodes {
-        ... on Repository {
-          name
-          createdAt
-          description
-          watchers {
-            totalCount
-          }
-          stargazers {
-            totalCount
-          }
-        }
+        ...RepoItem_Repository
       }
     }
   }
