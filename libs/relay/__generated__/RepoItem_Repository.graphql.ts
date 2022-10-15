@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c2dd118712c9de75157cb7b2d029578>>
+ * @generated SignedSource<<2774a0f83e3aa5492fdb227b6227a466>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RepoItem_Repository$data = {
-  readonly createdAt?: any;
-  readonly description?: string | null;
-  readonly name?: string;
-  readonly stargazers?: {
-    readonly totalCount: number;
-  };
-  readonly watchers?: {
-    readonly totalCount: number;
-  };
+  readonly cursor: string;
+  readonly node: {
+    readonly createdAt?: any;
+    readonly databaseId?: number | null;
+    readonly description?: string | null;
+    readonly name?: string;
+    readonly stargazers?: {
+      readonly totalCount: number;
+    };
+    readonly watchers?: {
+      readonly totalCount: number;
+    };
+  } | null;
   readonly " $fragmentType": "RepoItem_Repository";
 };
 export type RepoItem_Repository$key = {
@@ -44,59 +48,84 @@ return {
   "name": "RepoItem_Repository",
   "selections": [
     {
-      "kind": "InlineFragment",
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cursor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "node",
+      "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "createdAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "UserConnection",
-          "kind": "LinkedField",
-          "name": "watchers",
-          "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "StargazerConnection",
-          "kind": "LinkedField",
-          "name": "stargazers",
-          "plural": false,
-          "selections": (v0/*: any*/),
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "databaseId",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "name",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "createdAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "description",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "UserConnection",
+              "kind": "LinkedField",
+              "name": "watchers",
+              "plural": false,
+              "selections": (v0/*: any*/),
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "StargazerConnection",
+              "kind": "LinkedField",
+              "name": "stargazers",
+              "plural": false,
+              "selections": (v0/*: any*/),
+              "storageKey": null
+            }
+          ],
+          "type": "Repository",
+          "abstractKey": null
         }
       ],
-      "type": "Repository",
-      "abstractKey": null
+      "storageKey": null
     }
   ],
-  "type": "SearchResultItem",
-  "abstractKey": "__isSearchResultItem"
+  "type": "SearchResultItemEdge",
+  "abstractKey": null
 };
 })();
 
-(node as any).hash = "62718ef482b4a88753640649e67fdea4";
+(node as any).hash = "0e4ea4245865c09e69daeaffcbf71490";
 
 export default node;
