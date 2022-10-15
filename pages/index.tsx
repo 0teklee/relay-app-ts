@@ -8,6 +8,8 @@ import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_s
 import Title from "components/common/Title";
 import Layout from "components/common/Layout";
 import SearchBar from "components/module/SearchBar";
+import RepoTable from "components/module/RepoTable";
+import RepoItem_Repository from "components/module/RepoItem";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,6 +30,15 @@ export default function Home() {
             <Title text="Github Search" />
             <Title subTitle text="built with Relay & Next.js" />
             <SearchBar setState={setSearchQuery} />
+            <RepoTable>
+              {data ? (
+                data?.search?.nodes?.map((node) => (
+                  <RepoItem_Repository key={node.id} node={node} />
+                ))
+              ) : (
+                <p>No result.. 😓</p>
+              )}
+            </RepoTable>
           </Layout>
         </>
       )}
