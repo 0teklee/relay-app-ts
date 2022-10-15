@@ -1,7 +1,6 @@
 import { graphql, useFragment, usePaginationFragment } from "relay-hooks";
 import type { RepoItem_Repository$key } from "libs/relay/__generated__/RepoItem_Repository.graphql";
 
-// RepoItem Fragment & index before relay compile
 const fragment = graphql`
   fragment RepoItem_Repository on SearchResultItemEdge {
     cursor
@@ -29,18 +28,27 @@ interface IProps {
 }
 
 const RepoItem_Repository = ({ edge }: IProps) => {
-  const { node, cursor } = useFragment(fragment, edge);
-  const { name, createdAt, description = "", stargazers, watchers } = node;
-  const LocaleDate = new Date(createdAt).toLocaleString("ko-KR", {
-    dateStyle: "medium",
-  });
-  console.log("child frag cursor", cursor);
+  const { node } = useFragment(fragment, edge);
+  // const { name, createdAt, description = "", stargazers, watchers } = node;
+  const LocaleDate = (createdAt: string) =>
+    new Date(createdAt).toLocaleString("ko-KR", {
+      dateStyle: "medium",
+    });
   return (
     <div className="mb-8 p-5 border-b border-gray-300">
-      <h3 className="mb-4 text-2xl font-bold">{name}</h3>
-      <p className="mb-1 text-sm">{LocaleDate}</p>
-      <p className="mb-4 text-sm">views : {watchers?.totalCount}</p>
-      <p className="mb-4">{description}</p>
+      {node && (
+        <>
+          <h3 className="mb-4 text-2xl font-bold">{node.name}</h3>
+          <p className="mb-1 text-sm">{LocaleDate(node.createdAt)}</p>
+          <div className="flex justify-between w-48 mb-4">
+            <p className="mr-4 text-sm">
+              views 👀: {node.watchers?.totalCount}
+            </p>
+            <p className="text-sm">stars ⭐: {node.watchers?.totalCount}</p>
+          </div>
+          <p className="mb-4">{node.description}</p>
+        </>
+      )}
     </div>
   );
 };
