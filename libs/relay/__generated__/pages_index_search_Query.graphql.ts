@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8f48e0b911024c06d664d74d230206a>>
+ * @generated SignedSource<<a53fa39cd140a9fd37561e6af1e7c2eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -257,7 +257,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "databaseId",
+                        "name": "createdAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "description",
                         "storageKey": null
                       },
                       {
@@ -271,14 +278,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "createdAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "description",
+                        "name": "url",
                         "storageKey": null
                       },
                       {
@@ -331,12 +331,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a00610a2e44d563da18cad7e5b6bfea8",
+    "cacheID": "7b0d9f74d0212fb2e15667438700783c",
     "id": null,
     "metadata": {},
     "name": "pages_index_search_Query",
     "operationKind": "query",
-    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      databaseId\n      name\n      createdAt\n      description\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();

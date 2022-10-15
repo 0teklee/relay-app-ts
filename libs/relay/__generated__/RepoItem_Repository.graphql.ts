@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2774a0f83e3aa5492fdb227b6227a466>>
+ * @generated SignedSource<<837e9446cb96850a6f4043b2be361068>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,12 @@ export type RepoItem_Repository$data = {
   readonly cursor: string;
   readonly node: {
     readonly createdAt?: any;
-    readonly databaseId?: number | null;
     readonly description?: string | null;
     readonly name?: string;
     readonly stargazers?: {
       readonly totalCount: number;
     };
+    readonly url?: any;
     readonly watchers?: {
       readonly totalCount: number;
     };
@@ -69,7 +69,14 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "databaseId",
+              "name": "createdAt",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "description",
               "storageKey": null
             },
             {
@@ -83,14 +90,7 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "createdAt",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "description",
+              "name": "url",
               "storageKey": null
             },
             {
@@ -126,6 +126,6 @@ return {
 };
 })();
 
-(node as any).hash = "0e4ea4245865c09e69daeaffcbf71490";
+(node as any).hash = "8ab0c08ac05d1025fb48725f614e6527";
 
 export default node;
