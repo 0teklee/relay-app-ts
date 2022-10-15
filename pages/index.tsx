@@ -1,14 +1,22 @@
+import { useState } from "react";
+
 import { fetchQuery, graphql } from "react-relay";
+import { useQuery } from "relay-hooks";
 import { initEnvironment } from "libs/relay/relayEnvironment";
+import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 
 import Title from "components/common/Title";
 import Layout from "components/common/Layout";
 import SearchBar from "components/module/SearchBar";
 
-import { useState } from "react";
-
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const { data, error, isLoading } = useQuery(query, {
+    first: 5,
+    query: searchQuery,
+    type: "REPOSITORY",
+  });
 
   return (
     <div className="w-screen h-full p-12 bg-red-600">
@@ -48,6 +56,15 @@ const query = graphql`
 export const getStaticProps = async () => {
   const environment = initEnvironment();
   try {
+    const queryProps = await fetchQuery<pages_index_search_Query>(
+      environment,
+      query,
+      {
+        first: 5,
+        query: "",
+        type: "REPOSITORY",
+      }
+    ).toPromise();
     const initialRecords = environment.getStore().getSource().toJSON();
 
     return {
