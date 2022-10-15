@@ -28,7 +28,14 @@ const RepoItem_Repository = ({ node }: IProps) => {
     dateStyle: "medium",
   });
   console.log("innerItem", data);
-  return <div className="mb-8 p-5 border-b border-gray-300"></div>;
+  return (
+    <div className="mb-8 p-5 border-b border-gray-300">
+      <h3 className="mb-4 text-2xl font-bold">{name}</h3>
+      <p className="mb-1 text-sm">{LocaleDate}</p>
+      <p className="mb-4 text-sm">views : {watchers?.totalCount}</p>
+      <p className="mb-4">{description}</p>
+    </div>
+  );
 };
 
 export default RepoItem_Repository;
