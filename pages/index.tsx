@@ -11,19 +11,28 @@ import SearchBar from "components/module/SearchBar";
 import RepoTable from "components/module/RepoTable";
 import RepoItem_Repository from "components/module/RepoItem";
 
+let repoId = 0;
 export default function Home() {
+  const [page, setPage] = useState<{
+    first: number | null;
+    last: number | null;
+  }>({
+    first: 5,
+    last: null,
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [afterQuery, setAfterQuery] = useState<string | null>(null);
   const [beforeQuery, setBeforeQuery] = useState<string | null>(null);
+
   const { data, error, isLoading } = useQuery<pages_index_search_Query>(query, {
-    first: 5,
+    first: page.first,
+    last: page.last,
     query: searchQuery,
     type: "REPOSITORY",
     after: afterQuery,
     before: beforeQuery,
   });
 
-  console.log("부모컴포넌트 data", data);
   return (
     <div className="w-screen h-full p-12 bg-red-600">
       <Layout>
@@ -34,16 +43,21 @@ export default function Home() {
           {isLoading && <p>Loading..</p>}
           {data?.search?.pageInfo?.hasPreviousPage && (
             <button
+              className="mr-12"
               onClick={() => {
+                setAfterQuery(null);
+                setPage({ first: null, last: 5 });
                 setBeforeQuery(data?.search?.pageInfo?.startCursor);
               }}
             >
-              preevious
+              prev
             </button>
           )}
           {data?.search?.pageInfo?.hasNextPage && (
             <button
               onClick={() => {
+                setBeforeQuery(null);
+                setPage({ first: 5, last: null });
                 setAfterQuery(data?.search?.pageInfo?.endCursor);
               }}
             >
@@ -52,7 +66,10 @@ export default function Home() {
           )}
           {data?.search?.edges?.length !== 0 ? (
             data?.search?.edges?.map((edge, i) => (
-              <RepoItem_Repository key={`result_${i}`} edge={edge} />
+              <>
+                <p>{i}</p>
+                <RepoItem_Repository key={`result_${i}`} edge={edge} />
+              </>
             ))
           ) : (
             <p>No result.. 😓</p>
@@ -65,15 +82,17 @@ export default function Home() {
 
 const query = graphql`
   query pages_index_search_Query(
-    $first: Int
     $query: String!
+    $first: Int
+    $last: Int
     $type: SearchType!
     $after: String
     $before: String
   ) {
     search(
-      first: $first
       query: $query
+      first: $first
+      last: $last
       type: $type
       after: $after
       before: $before
