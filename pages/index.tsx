@@ -13,35 +13,52 @@ import RepoItem_Repository from "components/module/RepoItem";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-
-  const { data, error, isLoading } = useQuery(query, {
+  const [afterQuery, setAfterQuery] = useState<string | null>(null);
+  const [beforeQuery, setBeforeQuery] = useState<string | null>(null);
+  const { data, error, isLoading } = useQuery<pages_index_search_Query>(query, {
     first: 5,
     query: searchQuery,
     type: "REPOSITORY",
+    after: afterQuery,
+    before: beforeQuery,
   });
 
+  console.log("부모컴포넌트 data", data);
   return (
     <div className="w-screen h-full p-12 bg-red-600">
-      {false ? (
-        "Loading..."
-      ) : (
-        <>
-          <Layout>
-            <Title text="Github Search" />
-            <Title subTitle text="built with Relay & Next.js" />
-            <SearchBar setState={setSearchQuery} />
-            <RepoTable>
-              {data ? (
-                data?.search?.nodes?.map((node) => (
-                  <RepoItem_Repository key={node.id} node={node} />
-                ))
-              ) : (
-                <p>No result.. 😓</p>
-              )}
-            </RepoTable>
-          </Layout>
-        </>
-      )}
+      <Layout>
+        <Title text="Github Search" />
+        <Title subTitle text="built with Relay & Next.js" />
+        <SearchBar setState={setSearchQuery} />
+        <RepoTable>
+          {isLoading && <p>Loading..</p>}
+          {data?.search?.pageInfo?.hasPreviousPage && (
+            <button
+              onClick={() => {
+                setBeforeQuery(data?.search?.pageInfo?.startCursor);
+              }}
+            >
+              preevious
+            </button>
+          )}
+          {data?.search?.pageInfo?.hasNextPage && (
+            <button
+              onClick={() => {
+                setAfterQuery(data?.search?.pageInfo?.endCursor);
+              }}
+            >
+              next
+            </button>
+          )}
+          {data?.search?.edges?.length !== 0 ? (
+            data?.search?.edges?.map((edge, i) => (
+              <RepoItem_Repository key={`result_${i}`} edge={edge} />
+            ))
+          ) : (
+            <p>No result.. 😓</p>
+          )}
+        </RepoTable>
+      </Layout>
     </div>
   );
 }
@@ -51,13 +68,23 @@ const query = graphql`
     $first: Int
     $query: String!
     $type: SearchType!
+    $after: String
+    $before: String
   ) {
-    search(first: $first, query: $query, type: $type) {
+    search(
+      first: $first
+      query: $query
+      type: $type
+      after: $after
+      before: $before
+    ) {
       pageInfo {
+        startCursor
         hasNextPage
+        hasPreviousPage
         endCursor
       }
-      nodes {
+      edges {
         ...RepoItem_Repository
       }
     }
