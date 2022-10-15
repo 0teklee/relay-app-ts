@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a53fa39cd140a9fd37561e6af1e7c2eb>>
+ * @generated SignedSource<<a1ef954eaa11e80337ead44d57f1c625>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,7 @@ export type pages_index_search_Query$data = {
       readonly hasPreviousPage: boolean;
       readonly startCursor: string | null;
     };
+    readonly repositoryCount: number;
   };
 };
 export type pages_index_search_Query = {
@@ -139,7 +140,14 @@ v7 = {
   ],
   "storageKey": null
 },
-v8 = [
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "repositoryCount",
+  "storageKey": null
+},
+v9 = [
   {
     "alias": null,
     "args": null,
@@ -171,6 +179,7 @@ return {
         "plural": false,
         "selections": [
           (v7/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -216,6 +225,7 @@ return {
         "plural": false,
         "selections": [
           (v7/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -288,7 +298,7 @@ return {
                         "kind": "LinkedField",
                         "name": "watchers",
                         "plural": false,
-                        "selections": (v8/*: any*/),
+                        "selections": (v9/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -298,7 +308,7 @@ return {
                         "kind": "LinkedField",
                         "name": "stargazers",
                         "plural": false,
-                        "selections": (v8/*: any*/),
+                        "selections": (v9/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -331,16 +341,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7b0d9f74d0212fb2e15667438700783c",
+    "cacheID": "568cb9a160ceae35c51346c8dbe6ffee",
     "id": null,
     "metadata": {},
     "name": "pages_index_search_Query",
     "operationKind": "query",
-    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    repositoryCount\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2b4e2cc0a61f4a10fc94ca4cd63e7479";
+(node as any).hash = "842c22f30138767977f5f9f1e16d9cb0";
 
 export default node;
