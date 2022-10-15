@@ -40,7 +40,12 @@ export default function Home() {
         <SearchBar setState={setSearchQuery} />
         <RepoTable>
           {isLoading && <p>Loading..</p>}
-          {data?.search?.pageInfo?.hasPreviousPage && (
+          {data?.search.repositoryCount && (
+            <p className="mb-6 text-center text-lg font-semibold">
+              Total Result : {data?.search.repositoryCount}
+            </p>
+          )}
+          {data?.search.pageInfo.hasPreviousPage && (
             <button
               className="mr-12"
               onClick={() => {
@@ -52,19 +57,19 @@ export default function Home() {
               prev
             </button>
           )}
-          {data?.search?.pageInfo?.hasNextPage && (
+          {data?.search.pageInfo.hasNextPage && (
             <button
               onClick={() => {
                 setBeforeQuery(null);
                 setPage({ first: 5, last: null });
-                setAfterQuery(data?.search?.pageInfo?.endCursor);
+                setAfterQuery(data?.search.pageInfo.endCursor);
               }}
             >
               next
             </button>
           )}
-          {data?.search?.edges?.length !== 0 ? (
-            data?.search?.edges?.map(
+          {data?.search.edges?.length !== 0 ? (
+            data?.search.edges?.map(
               (edge, i) =>
                 edge && <RepoItem_Repository key={`result_${i}`} edge={edge} />
             )
