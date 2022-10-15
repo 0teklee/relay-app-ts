@@ -33,7 +33,7 @@ export default function Home() {
   });
 
   return (
-    <div className="w-screen h-full p-12 bg-red-600">
+    <div className="w-screen p-36 bg-red-600">
       <Layout>
         <Title text="Github Search" />
         <Title subTitle text="built with Relay & Next.js" />
@@ -45,29 +45,32 @@ export default function Home() {
               Total Result : {data.search.repositoryCount}
             </p>
           )}
-          {data?.search.pageInfo.hasPreviousPage && (
-            <button
-              className="mr-12"
-              onClick={() => {
-                setAfterQuery(null);
-                setPage({ first: null, last: 5 });
-                setBeforeQuery(data?.search?.pageInfo?.startCursor);
-              }}
-            >
-              prev
-            </button>
-          )}
-          {data?.search.pageInfo.hasNextPage && (
-            <button
-              onClick={() => {
-                setBeforeQuery(null);
-                setPage({ first: 5, last: null });
-                setAfterQuery(data?.search.pageInfo.endCursor);
-              }}
-            >
-              next
-            </button>
-          )}
+          <div className="flex justify-center mb-6">
+            {data?.search.pageInfo.hasPreviousPage && (
+              <button
+                className="mr-12 hover:text-blue-700"
+                onClick={() => {
+                  setAfterQuery(null);
+                  setPage({ first: null, last: 5 });
+                  setBeforeQuery(data?.search?.pageInfo?.startCursor);
+                }}
+              >
+                {`< prev`}
+              </button>
+            )}
+            {data?.search.pageInfo.hasNextPage && (
+              <button
+                className="hover:text-blue-700"
+                onClick={() => {
+                  setBeforeQuery(null);
+                  setPage({ first: 5, last: null });
+                  setAfterQuery(data?.search.pageInfo.endCursor);
+                }}
+              >
+                {`next >`}
+              </button>
+            )}
+          </div>
           {data?.search.edges?.length !== 0
             ? data?.search.edges?.map(
                 (edge, i) =>
