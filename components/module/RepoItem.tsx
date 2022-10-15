@@ -7,10 +7,10 @@ const fragment = graphql`
     node {
       ... on SearchResultItem {
         ... on Repository {
-          databaseId
-          name
           createdAt
           description
+          name
+          url
           watchers {
             totalCount
           }
