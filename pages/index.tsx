@@ -11,7 +11,6 @@ import SearchBar from "components/module/SearchBar";
 import RepoTable from "components/module/RepoTable";
 import RepoItem_Repository from "components/module/RepoItem";
 
-let repoId = 0;
 export default function Home() {
   const [page, setPage] = useState<{
     first: number | null;
@@ -65,12 +64,10 @@ export default function Home() {
             </button>
           )}
           {data?.search?.edges?.length !== 0 ? (
-            data?.search?.edges?.map((edge, i) => (
-              <>
-                <p>{i}</p>
-                <RepoItem_Repository key={`result_${i}`} edge={edge} />
-              </>
-            ))
+            data?.search?.edges?.map(
+              (edge, i) =>
+                edge && <RepoItem_Repository key={`result_${i}`} edge={edge} />
+            )
           ) : (
             <p>No result.. 😓</p>
           )}
