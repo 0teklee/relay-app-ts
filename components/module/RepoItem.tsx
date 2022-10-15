@@ -1,4 +1,5 @@
 import { graphql, useFragment } from "react-relay/hooks";
+import type { RepoItem_Repository$key } from "libs/relay/__generated__/RepoItem_Repository.graphql";
 
 const fragment = graphql`
   fragment RepoItem_Repository on SearchResultItem {
@@ -17,7 +18,7 @@ const fragment = graphql`
 `;
 
 interface IProps {
-  node: any;
+  node: RepoItem_Repository$key;
 }
 
 const RepoItem_Repository = ({ node }: IProps) => {
