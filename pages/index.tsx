@@ -40,9 +40,9 @@ export default function Home() {
         <SearchBar setState={setSearchQuery} />
         <RepoTable>
           {isLoading && <p>Loading..</p>}
-          {data?.search.repositoryCount && (
+          {data && data.search.repositoryCount !== 0 && (
             <p className="mb-6 text-center text-lg font-semibold">
-              Total Result : {data?.search.repositoryCount}
+              Total Result : {data.search.repositoryCount}
             </p>
           )}
           {data?.search.pageInfo.hasPreviousPage && (
@@ -68,14 +68,14 @@ export default function Home() {
               next
             </button>
           )}
-          {data?.search.edges?.length !== 0 ? (
-            data?.search.edges?.map(
-              (edge, i) =>
-                edge && <RepoItem_Repository key={`result_${i}`} edge={edge} />
-            )
-          ) : (
-            <p>No result.. 😓</p>
-          )}
+          {data?.search.edges?.length !== 0
+            ? data?.search.edges?.map(
+                (edge, i) =>
+                  edge && (
+                    <RepoItem_Repository key={`result_${i}`} edge={edge} />
+                  )
+              )
+            : searchQuery && <p>No result.. 😓</p>}
         </RepoTable>
       </Layout>
     </div>
