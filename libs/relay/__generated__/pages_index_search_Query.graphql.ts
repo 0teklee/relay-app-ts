@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a64de4e05e0ff27ec735506c27f9057>>
+ * @generated SignedSource<<c8f48e0b911024c06d664d74d230206a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type pages_index_search_Query$variables = {
   after?: string | null;
   before?: string | null;
   first?: number | null;
+  last?: number | null;
   query: string;
   type: SearchType;
 };
@@ -55,14 +56,19 @@ v2 = {
 v3 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "query"
+  "name": "last"
 },
 v4 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "query"
+},
+v5 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "type"
 },
-v5 = [
+v6 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -80,6 +86,11 @@ v5 = [
   },
   {
     "kind": "Variable",
+    "name": "last",
+    "variableName": "last"
+  },
+  {
+    "kind": "Variable",
     "name": "query",
     "variableName": "query"
   },
@@ -89,7 +100,7 @@ v5 = [
     "variableName": "type"
   }
 ],
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -128,7 +139,7 @@ v6 = {
   ],
   "storageKey": null
 },
-v7 = [
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -144,7 +155,8 @@ return {
       (v1/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v4/*: any*/)
+      (v4/*: any*/),
+      (v5/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -152,13 +164,13 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v6/*: any*/),
         "concreteType": "SearchResultItemConnection",
         "kind": "LinkedField",
         "name": "search",
         "plural": false,
         "selections": [
-          (v6/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -185,9 +197,10 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v4/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v4/*: any*/),
+      (v5/*: any*/),
       (v0/*: any*/),
       (v1/*: any*/)
     ],
@@ -196,13 +209,13 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v6/*: any*/),
         "concreteType": "SearchResultItemConnection",
         "kind": "LinkedField",
         "name": "search",
         "plural": false,
         "selections": [
-          (v6/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -275,7 +288,7 @@ return {
                         "kind": "LinkedField",
                         "name": "watchers",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v8/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -285,7 +298,7 @@ return {
                         "kind": "LinkedField",
                         "name": "stargazers",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v8/*: any*/),
                         "storageKey": null
                       }
                     ],
@@ -318,16 +331,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ab25aaa395631b359901ee851d439349",
+    "cacheID": "a00610a2e44d563da18cad7e5b6bfea8",
     "id": null,
     "metadata": {},
     "name": "pages_index_search_Query",
     "operationKind": "query",
-    "text": "query pages_index_search_Query(\n  $first: Int\n  $query: String!\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(first: $first, query: $query, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      databaseId\n      name\n      createdAt\n      description\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      databaseId\n      name\n      createdAt\n      description\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1814600175ead477c25a0e8bc1600cbe";
+(node as any).hash = "2b4e2cc0a61f4a10fc94ca4cd63e7479";
 
 export default node;
