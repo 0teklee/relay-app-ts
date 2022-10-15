@@ -29,16 +29,22 @@ interface IProps {
 
 const RepoItem_Repository = ({ edge }: IProps) => {
   const { node } = useFragment(fragment, edge);
-  // const { name, createdAt, description = "", stargazers, watchers } = node;
   const LocaleDate = (createdAt: string) =>
     new Date(createdAt).toLocaleString("ko-KR", {
       dateStyle: "medium",
     });
+
   return (
     <div className="mb-8 p-5 border-b border-gray-300">
       {node && (
         <>
-          <h3 className="mb-4 text-2xl font-bold">{node.name}</h3>
+          <a
+            className="mb-4 text-2xl font-bold hover:text-blue-700"
+            href={node.url}
+            target="_"
+          >
+            {node.name}
+          </a>
           <p className="mb-1 text-sm">{LocaleDate(node.createdAt)}</p>
           <div className="flex justify-between w-48 mb-4">
             <p className="mr-4 text-sm">
