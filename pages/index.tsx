@@ -100,6 +100,7 @@ const query = graphql`
         hasPreviousPage
         endCursor
       }
+      repositoryCount
       edges {
         ...RepoItem_Repository
       }
