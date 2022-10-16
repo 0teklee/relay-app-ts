@@ -1,6 +1,8 @@
 import { graphql, useFragment, useMutation } from "relay-hooks";
 import type { RepoItem_Repository$key } from "libs/relay/__generated__/RepoItem_Repository.graphql";
 import { useState } from "react";
+import { RepoItem_AddStar_Mutation } from "libs/relay/__generated__/RepoItem_AddStar_Mutation.graphql";
+import { RepoItem_RemoveStar_Mutation } from "libs/relay/__generated__/RepoItem_RemoveStar_Mutation.graphql";
 
 const fragment = graphql`
   fragment RepoItem_Repository on SearchResultItemEdge {
@@ -58,11 +60,17 @@ const RepoItem_Repository = ({ edge }: IProps) => {
       dateStyle: "medium",
     });
 
-  const [commitAddStar] = useMutation(addStar);
-  const [commitRemoveStar] = useMutation(removeStar);
+  const [commitAddStar] = useMutation<RepoItem_AddStar_Mutation>(addStar);
+  const [commitRemoveStar] =
+    useMutation<RepoItem_RemoveStar_Mutation>(removeStar);
 
-  const [isStarAdded, setIsStarAdded] = useState(node?.viewerHasStarred);
-  const [starCount, setStarCount] = useState(node?.stargazerCount);
+  const [isStarAdded, setIsStarAdded] = useState<boolean | null>(
+    node!.viewerHasStarred || null
+  );
+  const [starCount, setStarCount] = useState<number | null>(
+    node!.stargazerCount || null
+  );
+
   return (
     <div className="mb-8 p-5 border-b border-gray-300">
       {node && (
@@ -85,21 +93,21 @@ const RepoItem_Repository = ({ edge }: IProps) => {
           {isStarAdded && (
             <button
               className="p-3 bg-white rounded-lg border-2 border-red-400 text-xs font-bold text-red-400 hover:bg-white hover:text-white hover:bg-red-400"
-              onClick={() =>
-                commitRemoveStar({
-                  variables: {
-                    input: {
-                      starrableId: node.id,
+              onClick={() => {
+                if (node.id) {
+                  return commitRemoveStar({
+                    variables: {
+                      input: {
+                        starrableId: node.id,
+                      },
                     },
-                  },
-                  onCompleted(data: {
-                    removeStar: { starrable: { stargazerCount: number } };
-                  }) {
-                    setIsStarAdded(false);
-                    setStarCount(data.removeStar.starrable.stargazerCount);
-                  },
-                })
-              }
+                    onCompleted(data) {
+                      setIsStarAdded(false);
+                      setStarCount(data!.removeStar!.starrable!.stargazerCount);
+                    },
+                  });
+                }
+              }}
             >
               Cancel ☆
             </button>
@@ -107,21 +115,21 @@ const RepoItem_Repository = ({ edge }: IProps) => {
           {!isStarAdded && (
             <button
               className="p-3 bg-white rounded-lg border-2 border-blue-400 text-xs font-bold text-blue-400 hover:text-white hover:bg-blue-400"
-              onClick={() =>
-                commitAddStar({
-                  variables: {
-                    input: {
-                      starrableId: node.id,
+              onClick={() => {
+                if (node.id) {
+                  return commitAddStar({
+                    variables: {
+                      input: {
+                        starrableId: node.id,
+                      },
                     },
-                  },
-                  onCompleted(data: {
-                    addStar: { starrable: { stargazerCount: number } };
-                  }) {
-                    setIsStarAdded(true);
-                    setStarCount(data.addStar.starrable.stargazerCount);
-                  },
-                })
-              }
+                    onCompleted(data) {
+                      setIsStarAdded(true);
+                      setStarCount(data!.addStar!.starrable!.stargazerCount);
+                    },
+                  });
+                }
+              }}
             >
               Add ⭐
             </button>
