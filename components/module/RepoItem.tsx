@@ -1,5 +1,6 @@
-import { graphql, useFragment, usePaginationFragment } from "relay-hooks";
+import { graphql, useFragment, useMutation } from "relay-hooks";
 import type { RepoItem_Repository$key } from "libs/relay/__generated__/RepoItem_Repository.graphql";
+import { useState } from "react";
 
 const fragment = graphql`
   fragment RepoItem_Repository on SearchResultItemEdge {
@@ -14,10 +15,33 @@ const fragment = graphql`
           watchers {
             totalCount
           }
-          stargazers {
-            totalCount
-          }
         }
+        ... on Starrable {
+          id
+          viewerHasStarred
+          stargazerCount
+        }
+      }
+    }
+  }
+`;
+
+const addStar = graphql`
+  mutation RepoItem_AddStar_Mutation($input: AddStarInput!) {
+    addStar(input: $input) {
+      starrable {
+        id
+        stargazerCount
+      }
+    }
+  }
+`;
+
+const removeStar = graphql`
+  mutation RepoItem_RemoveStar_Mutation($input: RemoveStarInput!) {
+    removeStar(input: $input) {
+      starrable {
+        stargazerCount
       }
     }
   }
@@ -34,6 +58,11 @@ const RepoItem_Repository = ({ edge }: IProps) => {
       dateStyle: "medium",
     });
 
+  const [commitAddStar, isAddInFlight] = useMutation(addStar);
+  const [commitRemoveStar, isRemoveInFlight] = useMutation(removeStar);
+
+  const [isStarAdded, setIsStarAdded] = useState(node?.viewerHasStarred);
+  const [starCount, setStarCount] = useState(node?.stargazerCount);
   return (
     <div className="mb-8 p-5 border-b border-gray-300">
       {node && (
@@ -50,9 +79,51 @@ const RepoItem_Repository = ({ edge }: IProps) => {
             <p className="mr-4 text-sm">
               views 👀: {node.watchers?.totalCount}
             </p>
-            <p className="text-sm">stars ⭐: {node.watchers?.totalCount}</p>
+            <p className="text-sm">stars ⭐: {starCount}</p>
           </div>
           <p className="mb-4">{node.description}</p>
+          {isStarAdded && (
+            <button
+              onClick={() =>
+                commitRemoveStar({
+                  variables: {
+                    input: {
+                      starrableId: node.id,
+                    },
+                  },
+                  onCompleted(data: {
+                    removeStar: { starrable: { stargazerCount: number } };
+                  }) {
+                    setIsStarAdded(false);
+                    setStarCount(data.removeStar.starrable.stargazerCount);
+                  },
+                })
+              }
+            >
+              Cancel ☆
+            </button>
+          )}
+          {!isStarAdded && (
+            <button
+              onClick={() =>
+                commitAddStar({
+                  variables: {
+                    input: {
+                      starrableId: node.id,
+                    },
+                  },
+                  onCompleted(data: {
+                    addStar: { starrable: { stargazerCount: number } };
+                  }) {
+                    setIsStarAdded(true);
+                    setStarCount(data.addStar.starrable.stargazerCount);
+                  },
+                })
+              }
+            >
+              Add ⭐
+            </button>
+          )}
         </>
       )}
     </div>
