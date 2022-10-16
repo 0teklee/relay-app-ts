@@ -58,8 +58,8 @@ const RepoItem_Repository = ({ edge }: IProps) => {
       dateStyle: "medium",
     });
 
-  const [commitAddStar, isAddInFlight] = useMutation(addStar);
-  const [commitRemoveStar, isRemoveInFlight] = useMutation(removeStar);
+  const [commitAddStar] = useMutation(addStar);
+  const [commitRemoveStar] = useMutation(removeStar);
 
   const [isStarAdded, setIsStarAdded] = useState(node?.viewerHasStarred);
   const [starCount, setStarCount] = useState(node?.stargazerCount);
@@ -68,13 +68,13 @@ const RepoItem_Repository = ({ edge }: IProps) => {
       {node && (
         <>
           <a
-            className="mb-4 text-2xl font-bold hover:text-blue-700"
+            className="text-2xl font-bold hover:text-blue-700"
             href={node.url}
             target="_"
           >
             {node.name}
           </a>
-          <p className="mb-1 text-sm">{LocaleDate(node.createdAt)}</p>
+          <p className="mt-2 mb-1 text-sm">{LocaleDate(node.createdAt)}</p>
           <div className="flex justify-between w-48 mb-4">
             <p className="mr-4 text-sm">
               views 👀: {node.watchers?.totalCount}
@@ -106,7 +106,7 @@ const RepoItem_Repository = ({ edge }: IProps) => {
           )}
           {!isStarAdded && (
             <button
-              className="p-3 bg-white rounded-lg border-2 border-blue-400 text-xs font-bold text-blue-400 hover:text-blue-400 hover:bg-blue-400 hover:text-white"
+              className="p-3 bg-white rounded-lg border-2 border-blue-400 text-xs font-bold text-blue-400 hover:text-white hover:bg-blue-400"
               onClick={() =>
                 commitAddStar({
                   variables: {
