@@ -81,9 +81,10 @@ const RepoItem_Repository = ({ edge }: IProps) => {
             </p>
             <p className="text-sm">stars ⭐: {starCount}</p>
           </div>
-          <p className="mb-4">{node.description}</p>
+          <p className="mb-6">{node.description}</p>
           {isStarAdded && (
             <button
+              className="p-3 bg-gray-400 rounded-lg border-2 border-gray-400 text-xs font-bold text-gray-700 hover:bg-white hover:text-red-400 hover:border-red-400"
               onClick={() =>
                 commitRemoveStar({
                   variables: {
@@ -105,6 +106,7 @@ const RepoItem_Repository = ({ edge }: IProps) => {
           )}
           {!isStarAdded && (
             <button
+              className="p-3 bg-white rounded-lg border-2 border-white text-xs font-bold text-gray-700 hover:text-blue-400 hover:border-blue-400"
               onClick={() =>
                 commitAddStar({
                   variables: {
