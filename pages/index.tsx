@@ -33,7 +33,7 @@ export default function Home() {
   });
 
   return (
-    <div className="w-screen p-36 bg-red-600">
+    <div className="w-screen p-12">
       <Layout>
         <Title text="Github Search" />
         <Title subTitle text="built with Relay & Next.js" />
@@ -45,7 +45,7 @@ export default function Home() {
               Total Result : {data.search.repositoryCount}
             </p>
           )}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-6 ">
             {data?.search.pageInfo.hasPreviousPage && (
               <button
                 className="mr-12 hover:text-blue-700"
