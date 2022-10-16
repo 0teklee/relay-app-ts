@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1ef954eaa11e80337ead44d57f1c625>>
+ * @generated SignedSource<<fad84d2c9a3fcdf1b782bcfed6d4a182>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -147,15 +147,13 @@ v8 = {
   "name": "repositoryCount",
   "storageKey": null
 },
-v9 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "totalCount",
-    "storageKey": null
-  }
-];
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -298,17 +296,15 @@ return {
                         "kind": "LinkedField",
                         "name": "watchers",
                         "plural": false,
-                        "selections": (v9/*: any*/),
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "StargazerConnection",
-                        "kind": "LinkedField",
-                        "name": "stargazers",
-                        "plural": false,
-                        "selections": (v9/*: any*/),
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "totalCount",
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
                       }
                     ],
@@ -318,13 +314,29 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "id",
+                        "name": "viewerHasStarred",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "stargazerCount",
                         "storageKey": null
                       }
+                    ],
+                    "type": "Starrable",
+                    "abstractKey": "__isStarrable"
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v9/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -341,12 +353,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "568cb9a160ceae35c51346c8dbe6ffee",
+    "cacheID": "a4151278f8dced2228902cfd720a4c6d",
     "id": null,
     "metadata": {},
     "name": "pages_index_search_Query",
     "operationKind": "query",
-    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    repositoryCount\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n      stargazers {\n        totalCount\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    repositoryCount\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n    }\n    ... on Starrable {\n      __isStarrable: __typename\n      id\n      viewerHasStarred\n      stargazerCount\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
   }
 };
 })();
