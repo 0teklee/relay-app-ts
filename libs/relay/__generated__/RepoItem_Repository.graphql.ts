@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<837e9446cb96850a6f4043b2be361068>>
+ * @generated SignedSource<<ea2aac221facc3e1b2b6f8f896fc6372>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type RepoItem_Repository$data = {
   readonly node: {
     readonly createdAt?: any;
     readonly description?: string | null;
+    readonly id?: string;
     readonly name?: string;
-    readonly stargazers?: {
-      readonly totalCount: number;
-    };
+    readonly stargazerCount?: number;
     readonly url?: any;
+    readonly viewerHasStarred?: boolean;
     readonly watchers?: {
       readonly totalCount: number;
     };
@@ -31,17 +31,7 @@ export type RepoItem_Repository$key = {
   readonly " $fragmentSpreads": FragmentRefs<"RepoItem_Repository">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "totalCount",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -100,22 +90,48 @@ return {
               "kind": "LinkedField",
               "name": "watchers",
               "plural": false,
-              "selections": (v0/*: any*/),
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "StargazerConnection",
-              "kind": "LinkedField",
-              "name": "stargazers",
-              "plural": false,
-              "selections": (v0/*: any*/),
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "totalCount",
+                  "storageKey": null
+                }
+              ],
               "storageKey": null
             }
           ],
           "type": "Repository",
           "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "id",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "viewerHasStarred",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "stargazerCount",
+              "storageKey": null
+            }
+          ],
+          "type": "Starrable",
+          "abstractKey": "__isStarrable"
         }
       ],
       "storageKey": null
@@ -124,8 +140,7 @@ return {
   "type": "SearchResultItemEdge",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "8ab0c08ac05d1025fb48725f614e6527";
+(node as any).hash = "0f7f9a3c79d9f0c01c6a17cf05a3ba68";
 
 export default node;
