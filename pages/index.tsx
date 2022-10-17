@@ -31,7 +31,6 @@ export default function Home() {
     after: afterQuery,
     before: beforeQuery,
   });
-
   return (
     <div className="w-screen p-12">
       <Layout>
@@ -40,6 +39,7 @@ export default function Home() {
         <SearchBar setState={setSearchQuery} />
         <RepoTable>
           {isLoading && <p>Loading..</p>}
+          {error && <p>Error...😫</p>}
           {data && data.search.repositoryCount !== 0 && (
             <p className="mb-6 text-center text-lg font-semibold">
               Total Result : {data.search.repositoryCount}
