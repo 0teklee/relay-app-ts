@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<953c6d06de1063918b99e5528ce83d4f>>
+ * @generated SignedSource<<e3b0aae454d19f2f5814584e511c9905>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,10 +20,22 @@ export type RepoItem_RemoveStar_Mutation$data = {
   readonly removeStar: {
     readonly starrable: {
       readonly stargazerCount: number;
+      readonly viewerHasStarred: boolean;
+    } | null;
+  } | null;
+};
+export type RepoItem_RemoveStar_Mutation$rawResponse = {
+  readonly removeStar: {
+    readonly starrable: {
+      readonly __typename: string;
+      readonly id: string;
+      readonly stargazerCount: number;
+      readonly viewerHasStarred: boolean;
     } | null;
   } | null;
 };
 export type RepoItem_RemoveStar_Mutation = {
+  rawResponse: RepoItem_RemoveStar_Mutation$rawResponse;
   response: RepoItem_RemoveStar_Mutation$data;
   variables: RepoItem_RemoveStar_Mutation$variables;
 };
@@ -49,6 +61,13 @@ v2 = {
   "kind": "ScalarField",
   "name": "stargazerCount",
   "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "viewerHasStarred",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -73,7 +92,8 @@ return {
             "name": "starrable",
             "plural": false,
             "selections": [
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -114,6 +134,7 @@ return {
                 "storageKey": null
               },
               (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -130,16 +151,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ecbf7ad0ae2a598ccc362d025ae68d9e",
+    "cacheID": "52c64fad36a33ad996334e7080cac211",
     "id": null,
     "metadata": {},
     "name": "RepoItem_RemoveStar_Mutation",
     "operationKind": "mutation",
-    "text": "mutation RepoItem_RemoveStar_Mutation(\n  $input: RemoveStarInput!\n) {\n  removeStar(input: $input) {\n    starrable {\n      __typename\n      stargazerCount\n      id\n    }\n  }\n}\n"
+    "text": "mutation RepoItem_RemoveStar_Mutation(\n  $input: RemoveStarInput!\n) {\n  removeStar(input: $input) {\n    starrable {\n      __typename\n      stargazerCount\n      viewerHasStarred\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6da81cb01a9ca7a605bf1e64eb985c8a";
+(node as any).hash = "df49362d60d999a8928312af46fc2f7d";
 
 export default node;

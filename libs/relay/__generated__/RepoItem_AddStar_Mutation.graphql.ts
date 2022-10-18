@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dca8c533c63920aad195fe9176b8f9c6>>
+ * @generated SignedSource<<72995168d6435e0b956ebdb3392cdc98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,22 @@ export type RepoItem_AddStar_Mutation$data = {
     readonly starrable: {
       readonly id: string;
       readonly stargazerCount: number;
+      readonly viewerHasStarred: boolean;
+    } | null;
+  } | null;
+};
+export type RepoItem_AddStar_Mutation$rawResponse = {
+  readonly addStar: {
+    readonly starrable: {
+      readonly __typename: string;
+      readonly id: string;
+      readonly stargazerCount: number;
+      readonly viewerHasStarred: boolean;
     } | null;
   } | null;
 };
 export type RepoItem_AddStar_Mutation = {
+  rawResponse: RepoItem_AddStar_Mutation$rawResponse;
   response: RepoItem_AddStar_Mutation$data;
   variables: RepoItem_AddStar_Mutation$variables;
 };
@@ -57,6 +69,13 @@ v3 = {
   "kind": "ScalarField",
   "name": "stargazerCount",
   "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "viewerHasStarred",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -82,7 +101,8 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -123,7 +143,8 @@ return {
                 "storageKey": null
               },
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -133,16 +154,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6d845d51ab2ec02a4cf211eac5361917",
+    "cacheID": "6452ab6ba655c5448e788a2670016275",
     "id": null,
     "metadata": {},
     "name": "RepoItem_AddStar_Mutation",
     "operationKind": "mutation",
-    "text": "mutation RepoItem_AddStar_Mutation(\n  $input: AddStarInput!\n) {\n  addStar(input: $input) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n    }\n  }\n}\n"
+    "text": "mutation RepoItem_AddStar_Mutation(\n  $input: AddStarInput!\n) {\n  addStar(input: $input) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      viewerHasStarred\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "84ab4dfa5ffbd6421c97f7c66381e3fe";
+(node as any).hash = "231cf76293dbaf4f3a08eb8e14dad3e6";
 
 export default node;
