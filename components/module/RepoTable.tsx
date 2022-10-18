@@ -1,9 +1,12 @@
-import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_search_Query.graphql";
-import { ReactNode, useState } from "react";
+import {
+  pages_index_search_Query,
+  pages_index_search_Query$variables,
+} from "libs/relay/__generated__/pages_index_search_Query.graphql";
 import {
   GraphQLTaggedNode,
   PreloadedQuery,
   usePreloadedQuery,
+  UseQueryLoaderLoadQueryOptions,
 } from "react-relay";
 
 import RepoItem_Repository from "components/module/RepoItem";
@@ -12,26 +15,15 @@ import RepoPageNav from "components/module/RepoPageNav";
 const RepoTable = ({
   query,
   queryReference,
+  loadQuery,
 }: {
   query: GraphQLTaggedNode;
   queryReference: PreloadedQuery<pages_index_search_Query>;
+  loadQuery: (
+    variables: pages_index_search_Query$variables,
+    options?: UseQueryLoaderLoadQueryOptions | undefined
+  ) => void;
 }) => {
-  const [afterQuery, setAfterQuery] = useState<string | null>(null);
-  const [beforeQuery, setBeforeQuery] = useState<string | null>(null);
-  const [page, setPage] = useState<{
-    first: number | null;
-    last: number | null;
-  }>({
-    first: 5,
-    last: null,
-  });
-
-  const pageNavSetterProps = {
-    setAfterQuery,
-    setBeforeQuery,
-    setPage,
-  };
-
   const data = usePreloadedQuery<pages_index_search_Query>(
     query,
     queryReference
@@ -44,15 +36,25 @@ const RepoTable = ({
           Total Result : {data.search.repositoryCount}
         </p>
       )}
-      {data && <RepoPageNav pageInfo={data.search.pageInfo} query={} />}
+      {data && (
+        <RepoPageNav
+          pageInfo={data.search.pageInfo}
+          query={queryReference.variables.query}
+          loadQuery={loadQuery}
+        />
+      )}
       {data?.search.edges?.length !== 0
         ? data?.search.edges?.map(
             (edge, i) =>
               edge && <RepoItem_Repository key={`result_${i}`} edge={edge} />
           )
-        : searchQuery && <p>No result.. 😓</p>}
+        : queryReference.variables.query && <p>No result.. 😓</p>}
       {data && (
-        <RepoPageNav pageInfo={data.search.pageInfo} {...pageNavSetterProps} />
+        <RepoPageNav
+          pageInfo={data.search.pageInfo}
+          query={queryReference.variables.query}
+          loadQuery={loadQuery}
+        />
       )}
     </div>
   );
