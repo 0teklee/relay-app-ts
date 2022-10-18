@@ -97,7 +97,7 @@ const RepoItem_Repository = ({ edge }: IProps) => {
           <p className="text-sm">stars ⭐: {stargazerCount}</p>
         </div>
         <p className="mb-6">{description}</p>
-        {node.viewerHasStarred && (
+        {viewerHasStarred && (
           <button
             className="p-3 bg-white rounded-lg border-2 border-red-400 text-xs font-bold text-red-400 hover:bg-white hover:text-white hover:bg-red-400"
             onClick={() => {
@@ -125,7 +125,7 @@ const RepoItem_Repository = ({ edge }: IProps) => {
             Cancel ☆
           </button>
         )}
-        {!node.viewerHasStarred && (
+        {!viewerHasStarred && (
           <button
             className="p-3 bg-white rounded-lg border-2 border-blue-400 text-xs font-bold text-blue-400 hover:text-white hover:bg-blue-400"
             onClick={() => {
@@ -161,7 +161,7 @@ const RepoItem_Repository = ({ edge }: IProps) => {
       </div>
     );
   } else {
-    /* if node is undefined */
+    /* if prop(node) is undefined */
     return <Spinner />;
   }
 };
