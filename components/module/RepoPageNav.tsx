@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 
 import { graphql, useFragment } from "relay-hooks";
 import { RepoPageNav_PageInfo$key } from "libs/relay/__generated__/RepoPageNav_PageInfo.graphql";
+import { pages_index_search_Query$variables } from "libs/relay/__generated__/pages_index_search_Query.graphql";
+import { UseQueryLoaderLoadQueryOptions } from "react-relay";
 
 const pageFragment = graphql`
   fragment RepoPageNav_PageInfo on PageInfo {
@@ -31,8 +33,12 @@ const RepoPageNav = ({ pageInfo, loadQuery }: IProps) => {
   };
 
   const handleNext = loadQuery({
-    after: 5,
+    query: data.,
+    after: endCursor,
     before: null,
+    type: "REPOSITORY",
+    first:5,
+    last:null
   });
 
   return (
