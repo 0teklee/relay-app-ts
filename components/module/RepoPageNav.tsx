@@ -14,22 +14,13 @@ const pageFragment = graphql`
 
 interface IProps {
   pageInfo: RepoPageNav_PageInfo$key;
-  setAfterQuery: Dispatch<SetStateAction<string | null>>;
-  setPage: Dispatch<
-    SetStateAction<{
-      first: number | null;
-      last: number | null;
-    }>
-  >;
-  setBeforeQuery: Dispatch<SetStateAction<string | null>>;
+  loadQuery: (
+    variables: pages_index_search_Query$variables,
+    options?: UseQueryLoaderLoadQueryOptions | undefined
+  ) => void;
 }
 
-const RepoPageNav = ({
-  pageInfo,
-  setAfterQuery,
-  setPage,
-  setBeforeQuery,
-}: IProps) => {
+const RepoPageNav = ({ pageInfo, loadQuery }: IProps) => {
   const { startCursor, endCursor, hasPreviousPage, hasNextPage } =
     useFragment<RepoPageNav_PageInfo$key>(pageFragment, pageInfo);
 
@@ -39,11 +30,10 @@ const RepoPageNav = ({
     setBeforeQuery(startCursor);
   };
 
-  const handleNext = () => {
-    setBeforeQuery(null);
-    setPage({ first: 5, last: null });
-    setAfterQuery(endCursor);
-  };
+  const handleNext = loadQuery({
+    after: 5,
+    before: null,
+  });
 
   return (
     <div className="flex justify-center mb-6 ">

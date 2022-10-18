@@ -1,12 +1,12 @@
 import { Suspense, useState } from "react";
 
-import { fetchQuery, graphql } from "react-relay";
 import {
-  useQuery,
-  useRelayEnvironment,
-  loadQuery,
+  fetchQuery,
+  graphql,
+  useQueryLoader,
   usePreloadedQuery,
-} from "relay-hooks";
+} from "react-relay";
+import { useQuery, useRelayEnvironment, loadQuery } from "relay-hooks";
 import { initEnvironment } from "libs/relay/relayEnvironment";
 import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 
@@ -41,23 +41,23 @@ export default function Home() {
 
   const environment = useRelayEnvironment();
 
-  const prefetch = loadQuery();
-  prefetch.next(
-    environment,
-    query,
-    {
-      first: page.first,
-      last: page.last,
-      query: searchQuery,
-      type: "REPOSITORY",
-      after: afterQuery,
-      before: beforeQuery,
-    },
-    { fetchPolicy: "store-or-network" }
-  );
+  // const prefetch = loadQuery();
+  // prefetch.next(
+  //   environment,
+  //   query,
+  //   {
+  //     first: page.first,
+  //     last: page.last,
+  //     query: searchQuery,
+  //     type: "REPOSITORY",
+  //     after: afterQuery,
+  //     before: beforeQuery,
+  //   },
+  //   { fetchPolicy: "store-or-network" }
+  // );
 
-  const prefetchData = usePreloadedQuery<pages_index_search_Query>(prefetch);
-  const { data, error, isLoading } = prefetchData;
+  const [queryReference, loadQuery] =
+    useQueryLoader<pages_index_search_Query>(query);
 
   const pageNavSetterProps = {
     setAfterQuery,
@@ -71,38 +71,12 @@ export default function Home() {
         <Title text="Github Search" />
         <Title subTitle text="built with Relay & Next.js" />
         <Title author text="by tekwoo lee" />
-        <SearchBar setState={setSearchQuery} />
-        <RepoTable>
-          {isLoading && <Spinner />}
-          {error && <p>Error...😫</p>}
-          <Suspense fallback={<Spinner />}>
-            {data && data.search.repositoryCount !== 0 && (
-              <p className="mb-6 text-center text-lg font-semibold">
-                Total Result : {data.search.repositoryCount}
-              </p>
-            )}
-            {data && (
-              <RepoPageNav
-                pageInfo={data.search.pageInfo}
-                {...pageNavSetterProps}
-              />
-            )}
-            {data?.search.edges?.length !== 0
-              ? data?.search.edges?.map(
-                  (edge, i) =>
-                    edge && (
-                      <RepoItem_Repository key={`result_${i}`} edge={edge} />
-                    )
-                )
-              : searchQuery && <p>No result.. 😓</p>}
-            {data && (
-              <RepoPageNav
-                pageInfo={data.search.pageInfo}
-                {...pageNavSetterProps}
-              />
-            )}
-          </Suspense>
-        </RepoTable>
+        <SearchBar loadQuery={loadQuery} />
+        <Suspense fallback={<Spinner />}>
+          {queryReference && (
+            <RepoTable query={query} queryReference={queryReference} />
+          )}
+        </Suspense>
       </Layout>
     </div>
   );
