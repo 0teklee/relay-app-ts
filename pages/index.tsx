@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import {
   fetchQuery,
@@ -19,51 +19,8 @@ import Spinner from "components/module/Spinner";
 import RepoPageNav from "components/module/RepoPageNav";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [afterQuery, setAfterQuery] = useState<string | null>(null);
-  const [beforeQuery, setBeforeQuery] = useState<string | null>(null);
-  const [page, setPage] = useState<{
-    first: number | null;
-    last: number | null;
-  }>({
-    first: 5,
-    last: null,
-  });
-
-  // const { data, error, isLoading } = useQuery<pages_index_search_Query>(query, {
-  //   first: page.first,
-  //   last: page.last,
-  //   query: searchQuery,
-  //   type: "REPOSITORY",
-  //   after: afterQuery,
-  //   before: beforeQuery,
-  // });
-
-  const environment = useRelayEnvironment();
-
-  // const prefetch = loadQuery();
-  // prefetch.next(
-  //   environment,
-  //   query,
-  //   {
-  //     first: page.first,
-  //     last: page.last,
-  //     query: searchQuery,
-  //     type: "REPOSITORY",
-  //     after: afterQuery,
-  //     before: beforeQuery,
-  //   },
-  //   { fetchPolicy: "store-or-network" }
-  // );
-
   const [queryReference, loadQuery] =
     useQueryLoader<pages_index_search_Query>(query);
-
-  const pageNavSetterProps = {
-    setAfterQuery,
-    setBeforeQuery,
-    setPage,
-  };
 
   return (
     <div className="w-screen p-12">
@@ -74,7 +31,11 @@ export default function Home() {
         <SearchBar loadQuery={loadQuery} />
         <Suspense fallback={<Spinner />}>
           {queryReference && (
-            <RepoTable query={query} queryReference={queryReference} />
+            <RepoTable
+              query={query}
+              queryReference={queryReference}
+              loadQuery={loadQuery}
+            />
           )}
         </Suspense>
       </Layout>
@@ -120,6 +81,7 @@ export const getStaticProps = async () => {
         first: 5,
         query: "",
         type: "REPOSITORY",
+        after: null,
       }
     ).toPromise();
     const initialRecords = environment.getStore().getSource().toJSON();
