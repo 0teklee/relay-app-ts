@@ -10,8 +10,13 @@ import Layout from "components/common/Layout";
 import SearchBar from "components/module/SearchBar";
 import RepoTable from "components/module/RepoTable";
 import RepoItem_Repository from "components/module/RepoItem";
+import Spinner from "components/module/Spinner";
+import RepoPageNav from "components/module/RepoPageNav";
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [afterQuery, setAfterQuery] = useState<string | null>(null);
+  const [beforeQuery, setBeforeQuery] = useState<string | null>(null);
   const [page, setPage] = useState<{
     first: number | null;
     last: number | null;
@@ -19,9 +24,6 @@ export default function Home() {
     first: 5,
     last: null,
   });
-  const [searchQuery, setSearchQuery] = useState("");
-  const [afterQuery, setAfterQuery] = useState<string | null>(null);
-  const [beforeQuery, setBeforeQuery] = useState<string | null>(null);
 
   const { data, error, isLoading } = useQuery<pages_index_search_Query>(query, {
     first: page.first,
@@ -31,46 +33,34 @@ export default function Home() {
     after: afterQuery,
     before: beforeQuery,
   });
+
+  const pageNavSetterProps = {
+    setAfterQuery,
+    setBeforeQuery,
+    setPage,
+  };
+
   return (
     <div className="w-screen p-12">
       <Layout>
         <Title text="Github Search" />
         <Title subTitle text="built with Relay & Next.js" />
+        <Title author text="by tekwoo lee" />
         <SearchBar setState={setSearchQuery} />
         <RepoTable>
-          {isLoading && <p>Loading..</p>}
+          {isLoading && <Spinner />}
           {error && <p>Error...😫</p>}
           {data && data.search.repositoryCount !== 0 && (
             <p className="mb-6 text-center text-lg font-semibold">
               Total Result : {data.search.repositoryCount}
             </p>
           )}
-          <div className="flex justify-center mb-6 ">
-            {data?.search.pageInfo.hasPreviousPage && (
-              <button
-                className="mr-12 hover:text-blue-700"
-                onClick={() => {
-                  setAfterQuery(null);
-                  setPage({ first: null, last: 5 });
-                  setBeforeQuery(data?.search?.pageInfo?.startCursor);
-                }}
-              >
-                {`< prev`}
-              </button>
-            )}
-            {data?.search.pageInfo.hasNextPage && (
-              <button
-                className="hover:text-blue-700"
-                onClick={() => {
-                  setBeforeQuery(null);
-                  setPage({ first: 5, last: null });
-                  setAfterQuery(data?.search.pageInfo.endCursor);
-                }}
-              >
-                {`next >`}
-              </button>
-            )}
-          </div>
+          {data && (
+            <RepoPageNav
+              pageInfo={data.search.pageInfo}
+              {...pageNavSetterProps}
+            />
+          )}
           {data?.search.edges?.length !== 0
             ? data?.search.edges?.map(
                 (edge, i) =>
@@ -79,6 +69,12 @@ export default function Home() {
                   )
               )
             : searchQuery && <p>No result.. 😓</p>}
+          {data && (
+            <RepoPageNav
+              pageInfo={data.search.pageInfo}
+              {...pageNavSetterProps}
+            />
+          )}
         </RepoTable>
       </Layout>
     </div>
@@ -102,13 +98,10 @@ const query = graphql`
       after: $after
       before: $before
     ) {
-      pageInfo {
-        startCursor
-        hasNextPage
-        hasPreviousPage
-        endCursor
-      }
       repositoryCount
+      pageInfo {
+        ...RepoPageNav_PageInfo
+      }
       edges {
         ...RepoItem_Repository
       }
