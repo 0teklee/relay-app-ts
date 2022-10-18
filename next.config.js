@@ -16,6 +16,10 @@ const nextConfig = {
       language: "typescript",
     },
   },
+  images: {
+    domains: ["avatars.githubusercontent.com"],
+    minimumCacheTTL: 300000,
+  },
 };
 
 module.exports = nextConfig;
