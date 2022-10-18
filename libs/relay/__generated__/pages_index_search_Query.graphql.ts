@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fad84d2c9a3fcdf1b782bcfed6d4a182>>
+ * @generated SignedSource<<b4506616137aebf9e5a516f5e566e4d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,10 +25,7 @@ export type pages_index_search_Query$data = {
       readonly " $fragmentSpreads": FragmentRefs<"RepoItem_Repository">;
     } | null> | null;
     readonly pageInfo: {
-      readonly endCursor: string | null;
-      readonly hasNextPage: boolean;
-      readonly hasPreviousPage: boolean;
-      readonly startCursor: string | null;
+      readonly " $fragmentSpreads": FragmentRefs<"RepoPageNav_PageInfo">;
     };
     readonly repositoryCount: number;
   };
@@ -104,50 +101,11 @@ v6 = [
 v7 = {
   "alias": null,
   "args": null,
-  "concreteType": "PageInfo",
-  "kind": "LinkedField",
-  "name": "pageInfo",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "startCursor",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasNextPage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasPreviousPage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "endCursor",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
   "name": "repositoryCount",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -177,7 +135,22 @@ return {
         "plural": false,
         "selections": [
           (v7/*: any*/),
-          (v8/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PageInfo",
+            "kind": "LinkedField",
+            "name": "pageInfo",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "RepoPageNav_PageInfo"
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -223,7 +196,45 @@ return {
         "plural": false,
         "selections": [
           (v7/*: any*/),
-          (v8/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PageInfo",
+            "kind": "LinkedField",
+            "name": "pageInfo",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasNextPage",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasPreviousPage",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endCursor",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -314,7 +325,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v9/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -336,7 +347,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v9/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -353,16 +364,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a4151278f8dced2228902cfd720a4c6d",
+    "cacheID": "5437f8d4ae12927ddb702eb67b548460",
     "id": null,
     "metadata": {},
     "name": "pages_index_search_Query",
     "operationKind": "query",
-    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    pageInfo {\n      startCursor\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n    repositoryCount\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n    }\n    ... on Starrable {\n      __isStarrable: __typename\n      id\n      viewerHasStarred\n      stargazerCount\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n"
+    "text": "query pages_index_search_Query(\n  $query: String!\n  $first: Int\n  $last: Int\n  $type: SearchType!\n  $after: String\n  $before: String\n) {\n  search(query: $query, first: $first, last: $last, type: $type, after: $after, before: $before) {\n    repositoryCount\n    pageInfo {\n      ...RepoPageNav_PageInfo\n    }\n    edges {\n      ...RepoItem_Repository\n    }\n  }\n}\n\nfragment RepoItem_Repository on SearchResultItemEdge {\n  cursor\n  node {\n    __typename\n    __isSearchResultItem: __typename\n    ... on Repository {\n      createdAt\n      description\n      name\n      url\n      watchers {\n        totalCount\n      }\n    }\n    ... on Starrable {\n      __isStarrable: __typename\n      id\n      viewerHasStarred\n      stargazerCount\n      __typename\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment RepoPageNav_PageInfo on PageInfo {\n  startCursor\n  hasNextPage\n  hasPreviousPage\n  endCursor\n}\n"
   }
 };
 })();
 
-(node as any).hash = "842c22f30138767977f5f9f1e16d9cb0";
+(node as any).hash = "5cc6bc9911c5c4e843444c96f19ad3af";
 
 export default node;
