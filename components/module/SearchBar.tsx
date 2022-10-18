@@ -1,5 +1,5 @@
 import { pages_index_search_Query$variables } from "libs/relay/__generated__/pages_index_search_Query.graphql";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { UseQueryLoaderLoadQueryOptions } from "react-relay";
 
 const SearchBar = ({
@@ -11,6 +11,13 @@ const SearchBar = ({
   ) => void;
 }) => {
   const textRef = useRef<string>("");
+  const handleSearch = useCallback(() => {
+    loadQuery({
+      type: "REPOSITORY",
+      first: 5,
+      query: textRef.current,
+    });
+  }, [loadQuery]);
 
   return (
     <div className="flex mb-10">
@@ -27,10 +34,7 @@ const SearchBar = ({
           className="p-3 rounded-r-xl border-t border-b border-r border-blue-400 bg-blue-400 text-white"
           onClick={(e) => {
             e.preventDefault();
-            loadQuery({
-              type: "REPOSITORY",
-              query: textRef.current,
-            });
+            handleSearch();
           }}
         >
           검색
