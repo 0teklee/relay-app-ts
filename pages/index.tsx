@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { fetchQuery, graphql } from "react-relay";
-import { useQuery } from "relay-hooks";
+import {
+  useQuery,
+  useRelayEnvironment,
+  loadQuery,
+  usePreloadedQuery,
+} from "relay-hooks";
 import { initEnvironment } from "libs/relay/relayEnvironment";
 import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 
@@ -25,14 +30,34 @@ export default function Home() {
     last: null,
   });
 
-  const { data, error, isLoading } = useQuery<pages_index_search_Query>(query, {
-    first: page.first,
-    last: page.last,
-    query: searchQuery,
-    type: "REPOSITORY",
-    after: afterQuery,
-    before: beforeQuery,
-  });
+  // const { data, error, isLoading } = useQuery<pages_index_search_Query>(query, {
+  //   first: page.first,
+  //   last: page.last,
+  //   query: searchQuery,
+  //   type: "REPOSITORY",
+  //   after: afterQuery,
+  //   before: beforeQuery,
+  // });
+
+  const environment = useRelayEnvironment();
+
+  const prefetch = loadQuery();
+  prefetch.next(
+    environment,
+    query,
+    {
+      first: page.first,
+      last: page.last,
+      query: searchQuery,
+      type: "REPOSITORY",
+      after: afterQuery,
+      before: beforeQuery,
+    },
+    { fetchPolicy: "store-or-network" }
+  );
+
+  const prefetchData = usePreloadedQuery<pages_index_search_Query>(prefetch);
+  const { data, error, isLoading } = prefetchData;
 
   const pageNavSetterProps = {
     setAfterQuery,
@@ -50,31 +75,33 @@ export default function Home() {
         <RepoTable>
           {isLoading && <Spinner />}
           {error && <p>Error...😫</p>}
-          {data && data.search.repositoryCount !== 0 && (
-            <p className="mb-6 text-center text-lg font-semibold">
-              Total Result : {data.search.repositoryCount}
-            </p>
-          )}
-          {data && (
-            <RepoPageNav
-              pageInfo={data.search.pageInfo}
-              {...pageNavSetterProps}
-            />
-          )}
-          {data?.search.edges?.length !== 0
-            ? data?.search.edges?.map(
-                (edge, i) =>
-                  edge && (
-                    <RepoItem_Repository key={`result_${i}`} edge={edge} />
-                  )
-              )
-            : searchQuery && <p>No result.. 😓</p>}
-          {data && (
-            <RepoPageNav
-              pageInfo={data.search.pageInfo}
-              {...pageNavSetterProps}
-            />
-          )}
+          <Suspense fallback={<Spinner />}>
+            {data && data.search.repositoryCount !== 0 && (
+              <p className="mb-6 text-center text-lg font-semibold">
+                Total Result : {data.search.repositoryCount}
+              </p>
+            )}
+            {data && (
+              <RepoPageNav
+                pageInfo={data.search.pageInfo}
+                {...pageNavSetterProps}
+              />
+            )}
+            {data?.search.edges?.length !== 0
+              ? data?.search.edges?.map(
+                  (edge, i) =>
+                    edge && (
+                      <RepoItem_Repository key={`result_${i}`} edge={edge} />
+                    )
+                )
+              : searchQuery && <p>No result.. 😓</p>}
+            {data && (
+              <RepoPageNav
+                pageInfo={data.search.pageInfo}
+                {...pageNavSetterProps}
+              />
+            )}
+          </Suspense>
         </RepoTable>
       </Layout>
     </div>
