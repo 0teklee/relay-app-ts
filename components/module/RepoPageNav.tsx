@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { useCallback } from "react";
 
 import { graphql, useFragment } from "relay-hooks";
 import { RepoPageNav_PageInfo$key } from "libs/relay/__generated__/RepoPageNav_PageInfo.graphql";
@@ -20,36 +20,54 @@ interface IProps {
     variables: pages_index_search_Query$variables,
     options?: UseQueryLoaderLoadQueryOptions | undefined
   ) => void;
+  query: string;
 }
 
-const RepoPageNav = ({ pageInfo, loadQuery }: IProps) => {
+const RepoPageNav = ({ pageInfo, loadQuery, query }: IProps) => {
   const { startCursor, endCursor, hasPreviousPage, hasNextPage } =
     useFragment<RepoPageNav_PageInfo$key>(pageFragment, pageInfo);
 
-  const handlePrev = () => {
-    setAfterQuery(null);
-    setPage({ first: null, last: 5 });
-    setBeforeQuery(startCursor);
-  };
+  const handlePrev = useCallback(() => {
+    loadQuery({
+      query: query,
+      after: null,
+      before: startCursor,
+      type: "REPOSITORY",
+      first: null,
+      last: 5,
+    });
+  }, [loadQuery, query, startCursor]);
 
-  const handleNext = loadQuery({
-    query: data.,
-    after: endCursor,
-    before: null,
-    type: "REPOSITORY",
-    first:5,
-    last:null
-  });
+  const handleNext = useCallback(() => {
+    loadQuery({
+      query: query,
+      after: endCursor,
+      before: null,
+      type: "REPOSITORY",
+      first: 5,
+      last: null,
+    });
+  }, [loadQuery, query, endCursor]);
 
   return (
     <div className="flex justify-center mb-6 ">
       {hasPreviousPage && (
-        <button className="mr-12 hover:text-blue-700" onClick={handlePrev}>
+        <button
+          className="mr-12 hover:text-blue-700"
+          onClick={() => {
+            handlePrev();
+          }}
+        >
           {`< prev`}
         </button>
       )}
       {hasNextPage && (
-        <button className="hover:text-blue-700" onClick={handleNext}>
+        <button
+          className="hover:text-blue-700"
+          onClick={() => {
+            handleNext();
+          }}
+        >
           {`next >`}
         </button>
       )}
