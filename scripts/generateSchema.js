@@ -1,11 +1,11 @@
 const fs = require("fs");
-const path = require("path");
-const fetch = require("isomorphic-fetch");
 const {
   getIntrospectionQuery,
   buildClientSchema,
   printSchema,
 } = require("graphql");
+const fetch = require("isomorphic-fetch");
+const path = require("path");
 
 const generateSchema = async () => {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;

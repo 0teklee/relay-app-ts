@@ -1,9 +1,10 @@
 import { useCallback } from "react";
 
-import { graphql, useFragment } from "relay-hooks";
-import { RepoPageNav_PageInfo$key } from "libs/relay/__generated__/RepoPageNav_PageInfo.graphql";
-import { pages_index_search_Query$variables } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 import { UseQueryLoaderLoadQueryOptions } from "react-relay";
+import { graphql, useFragment } from "relay-hooks";
+
+import { pages_index_search_Query$variables } from "libs/relay/__generated__/pages_index_search_Query.graphql";
+import { RepoPageNav_PageInfo$key } from "libs/relay/__generated__/RepoPageNav_PageInfo.graphql";
 
 const pageFragment = graphql`
   fragment RepoPageNav_PageInfo on PageInfo {

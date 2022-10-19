@@ -1,13 +1,14 @@
 import {
-  pages_index_search_Query,
-  pages_index_search_Query$variables,
-} from "libs/relay/__generated__/pages_index_search_Query.graphql";
-import {
   GraphQLTaggedNode,
   PreloadedQuery,
   usePreloadedQuery,
   UseQueryLoaderLoadQueryOptions,
 } from "react-relay";
+
+import {
+  pages_index_search_Query,
+  pages_index_search_Query$variables,
+} from "libs/relay/__generated__/pages_index_search_Query.graphql";
 
 import RepoItem_Repository from "components/module/RepoItem";
 import RepoPageNav from "components/module/RepoPageNav";

@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 const Spinner = ({ isTableSpinner }: { isTableSpinner?: boolean }) => {
   if (isTableSpinner) {
     return (

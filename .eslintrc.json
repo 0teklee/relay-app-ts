@@ -1,3 +1,58 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "object",
+          "type",
+          "internal",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "*",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "{react-relay*, relay*}",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "libs/*",
+            "group": "object"
+          },
+          {
+            "pattern": "libs/*",
+            "group": "type"
+          },
+          {
+            "pattern": "components/common/*",
+            "group": "unknown"
+          },
+          {
+            "pattern": "components/module/*",
+            "group": "unknown",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "unknown"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
 }

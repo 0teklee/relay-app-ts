@@ -1,16 +1,18 @@
 import { Suspense, useEffect } from "react";
 
 import { fetchQuery, graphql, useQueryLoader } from "react-relay";
-import { initEnvironment } from "libs/relay/relayEnvironment";
-import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 
-import Title from "components/common/Title";
-import Layout from "components/common/Layout";
-import SearchBar from "components/module/SearchBar";
-import RepoTable from "components/module/RepoTable";
-import Spinner from "components/module/Spinner";
+import { pages_index_search_Query } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 import { pages_index_viewer_Query } from "libs/relay/__generated__/pages_index_viewer_Query.graphql";
+import { initEnvironment } from "libs/relay/relayEnvironment";
+
+import Layout from "components/common/Layout";
+import Title from "components/common/Title";
+
 import GithubIntro from "components/module/GithubIntro";
+import RepoTable from "components/module/RepoTable";
+import SearchBar from "components/module/SearchBar";
+import Spinner from "components/module/Spinner";
 
 export default function Home() {
   const [queryReference, loadQuery] =

@@ -1,5 +1,7 @@
-import type { AppProps } from "next/app";
 import { RelayEnvironmentProvider } from "relay-hooks";
+
+import type { AppProps } from "next/app";
+
 import { InitialRecords, useEnvironment } from "libs/relay/relayEnvironment";
 import "styles/global.css";
 

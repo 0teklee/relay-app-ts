@@ -1,7 +1,10 @@
 import { graphql, useFragment, useMutation } from "relay-hooks";
+
 import type { RepoItem_Repository$key } from "libs/relay/__generated__/RepoItem_Repository.graphql";
+
 import { RepoItem_AddStar_Mutation } from "libs/relay/__generated__/RepoItem_AddStar_Mutation.graphql";
 import { RepoItem_RemoveStar_Mutation } from "libs/relay/__generated__/RepoItem_RemoveStar_Mutation.graphql";
+
 import Spinner from "./Spinner";
 
 const fragment = graphql`

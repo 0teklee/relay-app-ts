@@ -1,8 +1,9 @@
+import Image from "next/image";
+
 import { PreloadedQuery, useFragment, usePreloadedQuery } from "react-relay";
 import { graphql, GraphQLTaggedNode } from "relay-runtime";
-import { GithubIntro_Viewer$key } from "libs/relay/__generated__/GithubIntro_Viewer.graphql";
 
-import Image from "next/image";
+import { GithubIntro_Viewer$key } from "libs/relay/__generated__/GithubIntro_Viewer.graphql";
 import { pages_index_viewer_Query } from "libs/relay/__generated__/pages_index_viewer_Query.graphql";
 
 const viewerFragment = graphql`

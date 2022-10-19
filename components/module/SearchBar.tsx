@@ -1,6 +1,8 @@
-import { pages_index_search_Query$variables } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 import { useCallback, useRef } from "react";
+
 import { UseQueryLoaderLoadQueryOptions } from "react-relay";
+
+import { pages_index_search_Query$variables } from "libs/relay/__generated__/pages_index_search_Query.graphql";
 
 const SearchBar = ({
   loadQuery,
