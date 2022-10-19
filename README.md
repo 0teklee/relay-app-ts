@@ -30,5 +30,5 @@ Relay와 Github graphql API를 사용하여 깃헙 검색 앱을 개발했습니
 
 ### Study Node
 
-- [GraphQL은 무엇이고 왜 사용할까?](https://teklog.site/17)
-- [Relay는 왜 사용할까?](https://teklog.site/18)
+- [GraphQL은 무엇이고 왜 사용할까?](https://teklog.site/blog/17)
+- [Relay는 왜 사용할까?](https://teklog.site/blog/18)
