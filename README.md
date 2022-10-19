@@ -16,7 +16,7 @@
 ## Versions
 
 - 1.0.1 Render as you fetch (main branch)
-- [1.0.0 Render on fetch (renderOnFetch branch)] (https://github.com/0teklee/relay-app-ts/tree/renderOnFetch)
+- [1.0.0 Render on fetch (renderOnFetch branch)](https://github.com/0teklee/relay-app-ts/tree/renderOnFetch)
 
 ## Features
 
