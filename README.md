@@ -15,8 +15,8 @@
 
 ## Versions
 
-- Render as you fetch (main branch)
-- Render on fetch (renderOnFetch branch)
+- 1.0.1 Render as you fetch (main branch)
+- 1.0.0 Render on fetch (renderOnFetch branch)
 
 ## Features
 
