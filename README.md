@@ -13,6 +13,21 @@
 <img src="public/asset/search_pagination.gif" alt="search">
 <img src="public/asset/addstar_removestar.gif" alt="addRemove">
 
+## Versions
+
+- Render as you fetch (main branch)
+- Render on fetch (renderOnFetch branch)
+
+## Features
+
+- 깃헙 레포지토리 검색
+- 검색 결과 페이지네이션
+- 레포지토리 스타 추가/삭제
+
 ## Description
 
-##
+Relay와 Github graphql API를 사용하여 깃헙 검색 앱을 개발했습니다. graphql, relay 사용이 처음이었기에 공식 문서와 여러 자료를 통해 학습하였고, 학습한 내용을 노트로 정리하였습니다.
+
+- Study Node
+  -- [GraphQL은 무엇이고 왜 사용할까?](https://teklog.site/17)
+  -- [Relay는 왜 사용할까?](https://teklog.site/18)
