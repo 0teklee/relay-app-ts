@@ -10,8 +10,8 @@
 
 ## Demo
 
-[search]<img src="public/asset/search_pagination">
-[addRemove]<img src="public/asset/addstar_removestar">
+<img src="public/asset/search_pagination" alt="search">
+<img src="public/asset/addstar_removestar" alt="addRemove">
 
 ## Description
 
